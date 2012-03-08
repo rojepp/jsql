@@ -12,15 +12,9 @@ Code is in F# with a dependency on IronJS (included in the repo).
 #### JSExecute
 Executes the JavaScript nvarchar sent in and returns the output of that as a string. Should probably figure out some other way to marshall values between JS and Sql.
 
-    SELECT dbo.JSExecute('1 + 2;')     --> returns '3'
+    SELECT dbo.JSExecute('1 + 2;') --> returns '3'
+    SELECT dbo.JSExecute('var a = 1; var b = 2; a + b;') --> returns '3'
 
-#### JSResetContext
-The JS context is kept between calls to execute at the moment (insanely dangerous). For instance, if you
-
-    SELECT dbo.JSExecute('var a = 3;') --> returns '3'
-    SELECT dbo.JSExecute('a + a;')     --> returns '6'
-    SELECT dbo.JSResetContext()
-    SELECT dbo.JSExecute('a + a;')     --> Runtime error!
 
 
 ## Installing

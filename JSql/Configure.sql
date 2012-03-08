@@ -15,9 +15,6 @@ GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[JSExecute]') AND type in (N'FN', N'IF', N'TF', N'FS', N'FT'))
     DROP FUNCTION [dbo].[JSExecute]
 GO
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[JSResetContext]') AND type in (N'FN', N'IF', N'TF', N'FS', N'FT'))
-    DROP FUNCTION [dbo].[JSResetContext]
-GO
 
 IF  EXISTS (SELECT * FROM sys.assemblies asms WHERE asms.name = N'Jsql')
     DROP ASSEMBLY [JSql]
@@ -39,14 +36,5 @@ AS
 EXTERNAL NAME JSql.[JSql].[Execute]
 GO
 
-CREATE FUNCTION [dbo].JSResetContext()
-RETURNS bit
-AS 
-EXTERNAL NAME JSql.[JSql].[Reset]
-GO
-
 SELECT dbo.JSExecute('var a = 1; var b = 3; a + b;')
-SELECT dbo.JSExecute('a + b;')
-
-SELECT dbo.JSResetContext()
-SELECT dbo.JSExecute('a + b;')
+SELECT dbo.JSExecute('a + b;') -- Should error
